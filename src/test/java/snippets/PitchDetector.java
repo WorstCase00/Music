@@ -3,6 +3,9 @@ package snippets;
 import java.util.ArrayList;
 import java.util.List;
 
+import mst.music.analysis.IFrequencySpectrum;
+import mst.music.analysis.Pitch;
+
 import com.google.common.primitives.Floats;
 
 public class PitchDetector {
@@ -16,7 +19,7 @@ public class PitchDetector {
 		}
 	}
 	
-	public Pitch getPitch(Spectrum spectrum) {
+	public Pitch getPitch(IFrequencySpectrum spectrum) {
 		float[] spectrumValues = spectrum.getSpectrumValues();
 		float maxAmpl = Floats.max(spectrumValues);
 		float maxFrequency = -1;

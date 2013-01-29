@@ -5,6 +5,9 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
+import mst.music.analysis.IFrequencySpectrum;
+import mst.music.analysis.Pitch;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -59,7 +62,7 @@ public class SpectrumVisualizer {
         plot.getRangeAxis().setRange(-1, 1);
 	}
 
-	void update(float[] pcm, Spectrum spectrum) {
+	void update(float[] pcm, IFrequencySpectrum spectrum) {
 		spectrumDataSet = new DefaultCategoryDataset();
 		float[] spectrumValues = spectrum.getSpectrumValues();
 		for(int i = 0; i < spectrumValues.length / 2; i++) {

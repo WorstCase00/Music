@@ -2,6 +2,9 @@ package snippets;
 
 import java.util.Arrays;
 
+import mst.music.analysis.IFrequencySpectrum;
+import mst.music.analysis.FrequencySpectrum;
+
 import processing.core.PApplet;
 import ddf.minim.AudioInput;
 import ddf.minim.Minim;
@@ -26,7 +29,7 @@ public class MinimTest {
 
 
 				while(true) {
-					final AudioInput mic = minim.getLineIn(Minim.MONO, BUFFER_SIZE, SAMPLE_RATE);//				mic.mix.
+					final AudioInput mic = minim.getLineIn(Minim.MONO, BUFFER_SIZE, SAMPLE_RATE);
 					try {
 						Thread.sleep(250);
 					} catch (InterruptedException e) {
@@ -48,7 +51,7 @@ public class MinimTest {
 							maxAmpl = fft.getBand(band);
 						}
 					}
-					Spectrum spectrum = new Spectrum(fft.getBandWidth(), spectrumValues);
+					IFrequencySpectrum spectrum = new FrequencySpectrum(fft.getBandWidth(), spectrumValues);
 					visualizer.update(pcmSignal, spectrum);
 //					fft.inverse();
 					System.out.println("f: " + maxFreq+ " amplitude: " + maxAmpl + " band: " + maxBand);
