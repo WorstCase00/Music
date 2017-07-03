@@ -98,7 +98,7 @@ public class Prototype extends JFrame {
 		TrackingView trackingPanel = new TrackingView();
 		TrackingModel trackingModel = new TrackingModel(trackingPanel);
 		this.trackingController = new TrackingController(trackingModel);
-		this.trackingController.setExcercise(TrackDefinition.HANSL, 240);
+		this.trackingController.setExcercise(TrackDefinition.HANSL, 120);
 		add(trackingPanel);
 	}
 

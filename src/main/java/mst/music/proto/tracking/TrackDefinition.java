@@ -2,11 +2,16 @@ package mst.music.proto.tracking;
 
 import com.google.common.collect.Lists;
 import mst.music.analysis.Pitch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class TrackDefinition {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(TrackDefinition.class);
+
+	private static final long MILLIS_PER_DAY = 1000 * 60;
 	public static TrackDefinition HANSL = new TrackDefinition(
 			Lists.newArrayList(
 					Pitch.G4, Pitch.E4, Pitch.E4,
@@ -52,5 +57,24 @@ public class TrackDefinition {
 
 	public float getBeatCount() {
 		return lengths.stream().reduce((a, b) -> a + b).get() / beat;
+	}
+
+	public int calculateCurrentNoteIndex(long timeStampInMs, int bpm) {
+		LOGGER.debug("res: {}", ((double)bpm) * ((double)timeStampInMs) / MILLIS_PER_DAY);
+		int beatIndex = (int) Math.floor(((double)bpm) * ((double)timeStampInMs) / MILLIS_PER_DAY);
+		return calculateScoreIndexForBeatIndex(beatIndex);
+	}
+
+	private int calculateScoreIndexForBeatIndex(int beatIndex) {
+		LOGGER.debug("beat index: {}", beatIndex);
+		float length = beat * beatIndex;
+		float cumulatedSum = 0f;
+		for (int i = 0; i < lengths.size(); i++) {
+			cumulatedSum += lengths.get(i);
+			if (length < cumulatedSum) {
+				return i;
+			}
+		}
+		return lengths.size() - 1;
 	}
 }

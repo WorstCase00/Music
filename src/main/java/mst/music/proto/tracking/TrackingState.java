@@ -4,5 +4,5 @@ public enum TrackingState {
 
 	WAITING,
 	TRACKING,
-	DONE;
+	DONE
 }
