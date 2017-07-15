@@ -1,4 +1,4 @@
-package mst.music.proto.tracking;
+package mst.music.tracking;
 
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.pitch.PitchDetectionResult;

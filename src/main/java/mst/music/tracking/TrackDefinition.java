@@ -1,4 +1,4 @@
-package mst.music.proto.tracking;
+package mst.music.tracking;
 
 import com.google.common.collect.Lists;
 import mst.music.analysis.Pitch;
@@ -60,8 +60,8 @@ public class TrackDefinition {
 	}
 
 	public int calculateCurrentNoteIndex(long timeStampInMs, int bpm) {
-		LOGGER.debug("res: {}", ((double)bpm) * ((double)timeStampInMs) / MILLIS_PER_DAY);
-		int beatIndex = (int) Math.floor(((double)bpm) * ((double)timeStampInMs) / MILLIS_PER_DAY);
+		LOGGER.debug("res: {}", ((double)bpm) * ((double)timeStampInMs) / (double)MILLIS_PER_DAY);
+		int beatIndex = (int) Math.floor(((double)bpm) * ((double)timeStampInMs) / (double) MILLIS_PER_DAY);
 		return calculateScoreIndexForBeatIndex(beatIndex);
 	}
 

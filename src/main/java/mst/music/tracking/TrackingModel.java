@@ -1,4 +1,4 @@
-package mst.music.proto.tracking;
+package mst.music.tracking;
 
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
@@ -51,7 +51,7 @@ public class TrackingModel {
 			state = TrackingState.DONE;
 			view.showTrackingDone();
 		} else {
-			int currentIndex = definition.calculateCurrentNoteIndex((long) (audioEvent.getTimeStamp() - startTimestamp) * 1000, beatsPerMinute);
+			int currentIndex = definition.calculateCurrentNoteIndex((long) ((audioEvent.getTimeStamp() - startTimestamp) * 1000), beatsPerMinute);
 			LOGGER.debug("set current note index to: {}", currentIndex);
 			view.showCurrentNode(currentIndex);
 		}

@@ -28,10 +28,10 @@ import be.tarsos.dsp.AudioDispatcher;
 import be.tarsos.dsp.io.jvm.JVMAudioInputStream;
 import be.tarsos.dsp.pitch.PitchProcessor;
 import be.tarsos.dsp.pitch.PitchProcessor.PitchEstimationAlgorithm;
-import mst.music.proto.tracking.TrackDefinition;
-import mst.music.proto.tracking.TrackingController;
-import mst.music.proto.tracking.TrackingModel;
-import mst.music.proto.tracking.TrackingView;
+import mst.music.tracking.TrackDefinition;
+import mst.music.tracking.TrackingController;
+import mst.music.tracking.TrackingModel;
+import mst.music.tracking.TrackingView;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;

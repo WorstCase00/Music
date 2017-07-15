@@ -1,4 +1,4 @@
-package mst.music.proto.tracking;
+package mst.music.tracking;
 
 import abc.notation.MusicElement;
 import abc.notation.NoteAbstract;
@@ -43,7 +43,7 @@ public class TrackingView  extends JPanel {
 	}
 
 	public void showCurrentNode(int index) {
-		scoreUI.setSelectedItems(abc4jNotes.subList(0, index));
+		scoreUI.setSelectedItems(abc4jNotes.subList(0, index+1));
 		scoreUI.repaint();
 
 	}

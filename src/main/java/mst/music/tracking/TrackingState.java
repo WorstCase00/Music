@@ -1,4 +1,4 @@
-package mst.music.proto.tracking;
+package mst.music.tracking;
 
 public enum TrackingState {
 
