@@ -1,15 +1,15 @@
-package mst.music.tracking;
+package mst.music.scoring;
 
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.pitch.PitchDetectionHandler;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
 import mst.music.track.TrackDefinition;
 
-public class TrackingController implements PitchDetectionHandler {
+public class ScoringController implements PitchDetectionHandler {
 
-	private final TrackingModel model;
+	private final ScoringModel model;
 
-	public TrackingController(TrackingModel model) {
+	public ScoringController(ScoringModel model) {
 		this.model = model;
 	}
 
@@ -18,7 +18,7 @@ public class TrackingController implements PitchDetectionHandler {
 		model.addPitchDetectionResult(pitchDetectionResult, audioEvent);
 	}
 
-	public void setExcercise(TrackDefinition trackDefinition, int bpm) {
+	public void setExcercies(TrackDefinition trackDefinition, int bpm) {
 		model.setTrackDefinitions(trackDefinition);
 		model.setBeatsPerMinute(bpm);
 	}

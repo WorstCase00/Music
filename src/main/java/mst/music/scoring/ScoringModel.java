@@ -1,40 +1,33 @@
-package mst.music.tracking;
+package mst.music.scoring;
 
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
 import mst.music.track.TrackDefinition;
 import mst.music.track.TrackingState;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TrackingModel {
+public class ScoringModel {
+	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ScoringModel.class);
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(TrackingModel.class);
+	private final ScoringView view;
 
-	private final TrackingView view;
-
-	private int beatsPerMinute;
-	private TrackDefinition definition;
 	private TrackingState.State state;
-	private TrackingRecord record;
-	private double endTimestamp;
+	private TrackDefinition definition;
+	private int beatsPerMinute;
 	private double startTimestamp;
+	private double endTimestamp;
 
-	public TrackingModel(TrackingView view) {
-		this.view = view;
+	public ScoringModel(ScoringView scoringView) {
+		this.view = scoringView;
 		this.state = TrackingState.State.WAITING;
-		this.beatsPerMinute = -1;
-		this.definition = null;
 	}
 
 	public void setTrackDefinitions(TrackDefinition trackDefinition) {
 		this.definition = trackDefinition;
-		this.view.showTrack(trackDefinition);
 	}
 
 	public void setBeatsPerMinute(int beatsPerMinute) {
 		this.beatsPerMinute = beatsPerMinute;
-		this.view.showTempo(beatsPerMinute);
 	}
 
 	public void addPitchDetectionResult(PitchDetectionResult pitchDetectionResult, AudioEvent audioEvent) {
@@ -47,15 +40,13 @@ public class TrackingModel {
 
 	private void handleInTracking(PitchDetectionResult pitchDetectionResult, AudioEvent audioEvent) {
 		LOGGER.debug("ts: {}", audioEvent.getTimeStamp());
-		record.add(pitchDetectionResult, audioEvent);
 		if (audioEvent.getEndTimeStamp() > endTimestamp) {
 			LOGGER.debug("set state to done");
 			state = TrackingState.State.DONE;
-			view.showTrackingDone();
 		} else {
 			int currentIndex = definition.calculateCurrentNoteIndex((long) ((audioEvent.getTimeStamp() - startTimestamp) * 1000), beatsPerMinute);
 			LOGGER.debug("set current note index to: {}", currentIndex);
-			view.showCurrentNode(currentIndex);
+			view.update();
 		}
 	}
 
@@ -63,7 +54,6 @@ public class TrackingModel {
 		if(pitchDetectionResult.getPitch() != -1) {
 			LOGGER.debug("set state to tracking");
 			state = TrackingState.State.TRACKING;
-			record = new TrackingRecord();
 			startTimestamp = audioEvent.getTimeStamp();
 			endTimestamp = audioEvent.getTimeStamp() + definition.getBeatCount() / beatsPerMinute * 60;
 			LOGGER.debug("end timestamp: {}", endTimestamp);

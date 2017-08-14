@@ -2,6 +2,7 @@ package mst.music.tracking;
 
 import com.google.common.collect.Lists;
 import mst.music.analysis.Pitch;
+import mst.music.track.TrackDefinition;
 import mst.music.util.Constants;
 import org.junit.Test;
 

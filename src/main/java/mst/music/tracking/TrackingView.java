@@ -6,6 +6,7 @@ import abc.notation.Tune;
 import abc.parser.TuneParser;
 import abc.ui.swing.JScoreComponent;
 import abc.ui.swing.JScoreElement;
+import mst.music.track.TrackDefinition;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -35,11 +36,11 @@ public class TrackingView  extends JPanel {
 	}
 
 	public void showTrack(TrackDefinition trackDefinition) {
-
+		// TODO show different track
 	}
 
 	public void showTempo(int beatsPerMinute) {
-
+		// TODO
 	}
 
 	public void showCurrentNode(int index) {
@@ -49,5 +50,6 @@ public class TrackingView  extends JPanel {
 	}
 
 	public void showTrackingDone() {
+		// TODO
 	}
 }

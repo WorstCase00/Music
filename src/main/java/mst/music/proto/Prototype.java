@@ -28,7 +28,10 @@ import be.tarsos.dsp.AudioDispatcher;
 import be.tarsos.dsp.io.jvm.JVMAudioInputStream;
 import be.tarsos.dsp.pitch.PitchProcessor;
 import be.tarsos.dsp.pitch.PitchProcessor.PitchEstimationAlgorithm;
-import mst.music.tracking.TrackDefinition;
+import mst.music.scoring.ScoringController;
+import mst.music.scoring.ScoringModel;
+import mst.music.scoring.ScoringView;
+import mst.music.track.TrackDefinition;
 import mst.music.tracking.TrackingController;
 import mst.music.tracking.TrackingModel;
 import mst.music.tracking.TrackingView;
@@ -53,6 +56,8 @@ public class Prototype extends JFrame {
 	float sampleRate = 44100;
 	int bufferSize = 1024;
 	int overlap = 0;
+	private TrackingController trackingController;
+	private ScoringController scoringController;
 
 	private JTextArea textArea;
 
@@ -60,6 +65,7 @@ public class Prototype extends JFrame {
 	private Mixer currentMixer;
 
 	private PitchEstimationAlgorithm algo;
+
 	private ActionListener algoChangeListener = new ActionListener(){
 		@Override
 		public void actionPerformed(final ActionEvent e) {
@@ -74,7 +80,6 @@ public class Prototype extends JFrame {
 				e1.printStackTrace();
 			}
 	}};
-	private TrackingController trackingController;
 
 	public Prototype() {
 		this.setLayout(new GridLayout(3, 2));
@@ -90,16 +95,20 @@ public class Prototype extends JFrame {
 	}
 
 	private void initScoringPanel() {
-		ScoringPanel scoringPanel = new ScoringPanel();
-		add(scoringPanel);
+		ScoringView scoringView = new ScoringView();
+		add(scoringView);
+		ScoringModel scoringModel = new ScoringModel(scoringView);
+		this.scoringController = new ScoringController(scoringModel);
+		this.scoringController.setExcercies(TrackDefinition.HANSL, 120);
+
 	}
 
 	private void initTrackingPanel() {
 		TrackingView trackingPanel = new TrackingView();
+		add(trackingPanel);
 		TrackingModel trackingModel = new TrackingModel(trackingPanel);
 		this.trackingController = new TrackingController(trackingModel);
 		this.trackingController.setExcercise(TrackDefinition.HANSL, 120);
-		add(trackingPanel);
 	}
 
 	private void initLoggingPanel() {
@@ -156,13 +165,13 @@ public class Prototype extends JFrame {
 
 		JVMAudioInputStream audioStream = new JVMAudioInputStream(stream);
 		// create a new dispatcher
-		dispatcher = new AudioDispatcher(audioStream, bufferSize,
-				overlap);
+		dispatcher = new AudioDispatcher(audioStream, bufferSize, overlap);
 
 		// add a processor
 		PitchDetectionHandlerImpl detectionHandler = new PitchDetectionHandlerImpl(this);
 		dispatcher.addAudioProcessor(new PitchProcessor(algo, sampleRate, bufferSize, detectionHandler));
 		dispatcher.addAudioProcessor(new PitchProcessor(algo, sampleRate, bufferSize, trackingController));
+		dispatcher.addAudioProcessor(new PitchProcessor(algo, sampleRate, bufferSize, scoringController));
 		
 		new Thread(dispatcher,"Audio dispatching").start();
 	}

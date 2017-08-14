@@ -1,4 +1,4 @@
-package mst.music.tracking;
+package mst.music.track;
 
 import com.google.common.collect.Lists;
 import mst.music.analysis.Pitch;
