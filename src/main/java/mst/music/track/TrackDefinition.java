@@ -77,4 +77,8 @@ public class TrackDefinition {
 		}
 		return lengths.size() - 1;
 	}
+
+	public Pitch calculateNote(long timestamp, int beatsPerMinute) {
+		return pitches.get(calculateCurrentNoteIndex(timestamp, beatsPerMinute));
+	}
 }

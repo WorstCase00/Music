@@ -10,29 +10,26 @@ public class ScoringView extends JPanel {
 	private static final Random RANDOM = new Random(321l);
 
 	private final JPanel scoreBar;
+	private final JLabel currentScoreLabel;
 
 	public ScoringView() {
-		super(new GridLayout(1,1));
+		super(new GridLayout(2,1));
 		setBorder(new TitledBorder("Scoring"));
 		this.scoreBar = new JPanel();
-//		this.scoreBar.setBackground(Color.black);
-//		this.scoreBar.setSize(10, 10);
 		add(scoreBar);
-		scoreBar.setVisible(true);
+
+
+		this.currentScoreLabel = new JLabel("0");
+		add(currentScoreLabel);
 
 	}
 
 	public void update() {
-
-		setBackground(Color.getHSBColor(RANDOM.nextFloat(), RANDOM.nextFloat(), RANDOM.nextFloat()));
-//		scoreBar.invalidate();
-//		Graphics graphics = scoreBar.getGraphics();
+		this.scoreBar.setBackground(Color.getHSBColor(RANDOM.nextFloat(), RANDOM.nextFloat(), RANDOM.nextFloat()));
 		repaint();
-//		scoreBar.paint(graphics);
-//		scoreBar.update(graphics);
-////		scoreBar.repaint(graphics);
-//		repaint();
-//		update(graphics);
-//		validate();
+	}
+
+	public void updateCurrentScore(float currentScore) {
+		this.currentScoreLabel.setText(Float.toString(currentScore));
 	}
 }

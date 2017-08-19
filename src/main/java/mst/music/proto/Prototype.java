@@ -99,7 +99,7 @@ public class Prototype extends JFrame {
 		add(scoringView);
 		ScoringModel scoringModel = new ScoringModel(scoringView);
 		this.scoringController = new ScoringController(scoringModel);
-		this.scoringController.setExcercies(TrackDefinition.HANSL, 120);
+		this.scoringController.setExercise(TrackDefinition.HANSL, 120);
 
 	}
 

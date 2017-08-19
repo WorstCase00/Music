@@ -18,7 +18,7 @@ public class ScoringController implements PitchDetectionHandler {
 		model.addPitchDetectionResult(pitchDetectionResult, audioEvent);
 	}
 
-	public void setExcercies(TrackDefinition trackDefinition, int bpm) {
+	public void setExercise(TrackDefinition trackDefinition, int bpm) {
 		model.setTrackDefinitions(trackDefinition);
 		model.setBeatsPerMinute(bpm);
 	}
