@@ -44,6 +44,10 @@ public class ScoringModel {
 		}
 	}
 
+	float getCurrentScore() {
+		return currentScore;
+	}
+
 	private void handleInTracking(PitchDetectionResult pitchDetectionResult, AudioEvent audioEvent) {
 		LOGGER.debug("ts: {}", audioEvent.getTimeStamp());
 		trackingRecord.add(pitchDetectionResult, audioEvent);
@@ -53,8 +57,9 @@ public class ScoringModel {
 		} else {
 			int currentIndex = definition.calculateCurrentNoteIndex((long) ((audioEvent.getTimeStamp() - startTimestamp) * 1000), beatsPerMinute);
 			LOGGER.debug("set current note index to: {}", currentIndex);
-			view.update();
 			this.currentScore = calculateCurrentScore();
+			float percentage = this.currentScore / this.trackingRecord.getTimestamps().size();
+			view.updateScoreBar(percentage);
 			view.updateCurrentScore(currentScore);
 		}
 	}
@@ -62,6 +67,7 @@ public class ScoringModel {
 	private float calculateCurrentScore() {
 		List<Long> timestamps = this.trackingRecord.getTimestamps();
 		float sum = 0;
+		LOGGER.debug("timestamp count: {}", timestamps.size());
 		for (int i = 0; i < timestamps.size(); i++) {
 			Pitch expectedPitch = definition.calculateNote(timestamps.get(i), beatsPerMinute);
 			PitchDetectionResult result = trackingRecord.getResult(i);
@@ -69,9 +75,19 @@ public class ScoringModel {
 			float expectedFrequency = expectedPitch.getFrequency();
 			float actualFrequency = result.getPitch();
 
-			sum += (1 - (Math.abs(expectedFrequency - actualFrequency))/ (expectedFrequency + actualFrequency));
+			float delta = calculateDelta(expectedFrequency, actualFrequency);
+			LOGGER.debug("delta for frequency tuple ({}, {}): {}", new Object[] {expectedFrequency, actualFrequency, delta});
+			sum += delta;
 		}
+		LOGGER.debug("current score: {}", sum);
 		return sum;
+	}
+
+	private static float calculateDelta(float expectedFrequency, float actualFrequency) {
+		if (actualFrequency < 0) {
+			return 0;
+		}
+		return 1 - (Math.abs(expectedFrequency - actualFrequency)) / (expectedFrequency + actualFrequency);
 	}
 
 	private void handleInWaiting(PitchDetectionResult pitchDetectionResult, AudioEvent audioEvent) {
@@ -81,7 +97,8 @@ public class ScoringModel {
 			startTimestamp = audioEvent.getTimeStamp();
 			endTimestamp = audioEvent.getTimeStamp() + definition.getBeatCount() / beatsPerMinute * 60;
 			trackingRecord = new TrackingRecord();
-			currentScore = 0f;
+			trackingRecord.add(pitchDetectionResult, audioEvent);
+			currentScore = calculateCurrentScore();
 			LOGGER.debug("end timestamp: {}", endTimestamp);
 		}
 	}

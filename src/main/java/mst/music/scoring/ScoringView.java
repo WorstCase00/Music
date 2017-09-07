@@ -20,12 +20,14 @@ public class ScoringView extends JPanel {
 
 
 		this.currentScoreLabel = new JLabel("0");
+		this.currentScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		this.currentScoreLabel.setFont(this.currentScoreLabel.getFont().deriveFont(100f));
 		add(currentScoreLabel);
 
 	}
 
-	public void update() {
-		this.scoreBar.setBackground(Color.getHSBColor(RANDOM.nextFloat(), RANDOM.nextFloat(), RANDOM.nextFloat()));
+	public void updateScoreBar(float percentage) {
+		this.scoreBar.setBackground(new Color((1f - percentage), percentage, 0f));//Color.RGBtoHSB(0, 255f * percentage , 0)RANDOM.nextFloat(), RANDOM.nextFloat(), RANDOM.nextFloat()));
 		repaint();
 	}
 
