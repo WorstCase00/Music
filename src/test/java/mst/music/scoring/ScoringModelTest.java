@@ -55,7 +55,7 @@ public class ScoringModelTest {
 
 	private AudioEvent mockAudioEvent(double timestamp) {
 		AudioEvent mock = mock(AudioEvent.class);
-		when(mock.getTimeStamp()).thenReturn(timestamp);
+		when(mock.getTimeStamp()).thenReturn(timestamp / 1000);
 		return mock;
 	}
 

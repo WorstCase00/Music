@@ -3,6 +3,7 @@ package mst.music.scoring;
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
 import mst.music.analysis.Pitch;
+import mst.music.track.PitchDetectionEvent;
 import mst.music.track.TrackDefinition;
 import mst.music.track.TrackingState;
 import mst.music.tracking.TrackingRecord;
@@ -70,10 +71,10 @@ public class ScoringModel {
 		LOGGER.debug("timestamp count: {}", timestamps.size());
 		for (int i = 0; i < timestamps.size(); i++) {
 			Pitch expectedPitch = definition.calculateNote(timestamps.get(i), beatsPerMinute);
-			PitchDetectionResult result = trackingRecord.getResult(i);
+			PitchDetectionEvent result = trackingRecord.getResult(i);
 
 			float expectedFrequency = expectedPitch.getFrequency();
-			float actualFrequency = result.getPitch();
+			float actualFrequency = result.getFrequency();
 
 			float delta = calculateDelta(expectedFrequency, actualFrequency);
 			LOGGER.debug("delta for frequency tuple ({}, {}): {}", new Object[] {expectedFrequency, actualFrequency, delta});

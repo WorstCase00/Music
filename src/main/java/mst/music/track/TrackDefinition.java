@@ -60,8 +60,8 @@ public class TrackDefinition {
 	}
 
 	public int calculateCurrentNoteIndex(long timeStampInMs, int bpm) {
-		LOGGER.debug("res: {}", ((double)bpm) * ((double)timeStampInMs) / (double)MILLIS_PER_DAY);
 		int beatIndex = (int) Math.floor(((double)bpm) * ((double)timeStampInMs) / (double) MILLIS_PER_DAY);
+		LOGGER.debug("beatIndex: {}", beatIndex);
 		return calculateScoreIndexForBeatIndex(beatIndex);
 	}
 
