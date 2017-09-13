@@ -22,4 +22,8 @@ public class TrackingController implements PitchDetectionHandler {
 		model.setTrackDefinitions(trackDefinition);
 		model.setBeatsPerMinute(bpm);
 	}
+
+	public void refresh() {
+		model.refresh();
+	}
 }

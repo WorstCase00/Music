@@ -2,10 +2,13 @@ package mst.music.tracking;
 
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
+import com.google.common.collect.Lists;
 import mst.music.track.TrackDefinition;
 import mst.music.track.TrackingState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class TrackingModel {
 
@@ -20,11 +23,14 @@ public class TrackingModel {
 	private double endTimestamp;
 	private double startTimestamp;
 
+	private final List<TrackingListener> listeners;
+
 	public TrackingModel(TrackingView view) {
 		this.view = view;
 		this.state = TrackingState.State.WAITING;
 		this.beatsPerMinute = -1;
 		this.definition = null;
+		this.listeners = Lists.newArrayList();
 	}
 
 	public void setTrackDefinitions(TrackDefinition trackDefinition) {
@@ -35,6 +41,10 @@ public class TrackingModel {
 	public void setBeatsPerMinute(int beatsPerMinute) {
 		this.beatsPerMinute = beatsPerMinute;
 		this.view.showTempo(beatsPerMinute);
+	}
+
+	public void addListener(TrackingListener listener) {
+		this.listeners.add(listener);
 	}
 
 	public void addPitchDetectionResult(PitchDetectionResult pitchDetectionResult, AudioEvent audioEvent) {
@@ -52,6 +62,7 @@ public class TrackingModel {
 			LOGGER.debug("set state to done");
 			state = TrackingState.State.DONE;
 			view.showTrackingDone();
+			listeners.stream().forEach(listener -> listener.onTrackEnded());
 		} else {
 			int currentIndex = definition.calculateCurrentNoteIndex((long) ((audioEvent.getTimeStamp() - startTimestamp) * 1000), beatsPerMinute);
 			LOGGER.debug("set current note index to: {}", currentIndex);
@@ -67,6 +78,12 @@ public class TrackingModel {
 			startTimestamp = audioEvent.getTimeStamp();
 			endTimestamp = audioEvent.getTimeStamp() + definition.getBeatCount() / beatsPerMinute * 60;
 			LOGGER.debug("end timestamp: {}", endTimestamp);
+			listeners.stream().forEach(listener -> listener.onTrackStarted());
 		}
+	}
+
+	public void refresh() {
+		this.state = TrackingState.State.WAITING;
+		this.view.refresh();
 	}
 }

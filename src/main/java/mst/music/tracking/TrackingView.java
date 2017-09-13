@@ -11,6 +11,7 @@ import mst.music.track.TrackDefinition;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,10 +20,15 @@ public class TrackingView  extends JPanel {
 	private final JScoreComponent scoreUI;
 	private final List<JScoreElement> abc4jNotes;
 
+	String sumSumSum = "X:0\nT:Sum sum sum\nM:4/4\nK:D\nL:1/4\n" +
+			"G F E2|D E F D|C4|G G G2|G E E2|F D D2|C E G G|C4\n";
+
 	public TrackingView() {
 		super(new GridLayout(1,1));
 		setBorder(new TitledBorder("Tracking"));
 
+
+		// extract tune here
 		String tuneAsString = "X:0\nT:A simple scale exercise\nM:4/4\nK:D\nL:1/4\n" +
 				"G E E2|F D D2|C D E F|G G G2|G E E2|F D D2|C E G G|C4\n";
 		Tune tune = new TuneParser().parse(tuneAsString);
@@ -37,6 +43,12 @@ public class TrackingView  extends JPanel {
 
 	public void showTrack(TrackDefinition trackDefinition) {
 		// TODO show different track
+	}
+
+	public void refresh() {
+		scoreUI.setSelectedItems(Collections.emptyList());
+		scoreUI.repaint();
+
 	}
 
 	public void showTempo(int beatsPerMinute) {

@@ -29,6 +29,13 @@ public class ScoringModel {
 		this.state = TrackingState.State.WAITING;
 	}
 
+	public void refresh() {
+		currentScore = 0f;
+		state = TrackingState.State.WAITING;
+		view.updateScoreBar(0f);
+		view.updateCurrentScore(currentScore);
+	}
+
 	public void setTrackDefinitions(TrackDefinition trackDefinition) {
 		this.definition = trackDefinition;
 	}

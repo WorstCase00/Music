@@ -31,6 +31,9 @@ import be.tarsos.dsp.pitch.PitchProcessor.PitchEstimationAlgorithm;
 import mst.music.scoring.ScoringController;
 import mst.music.scoring.ScoringModel;
 import mst.music.scoring.ScoringView;
+import mst.music.session.SessionController;
+import mst.music.session.SessionModel;
+import mst.music.session.SessionView;
 import mst.music.track.TrackDefinition;
 import mst.music.tracking.TrackingController;
 import mst.music.tracking.TrackingModel;
@@ -58,6 +61,7 @@ public class Prototype extends JFrame {
 	int overlap = 0;
 	private TrackingController trackingController;
 	private ScoringController scoringController;
+	private SessionController sessionController;
 
 	private JTextArea textArea;
 
@@ -92,6 +96,16 @@ public class Prototype extends JFrame {
 		initAlgoPanel();
 		initScoringPanel();
 		initLoggingPanel();
+		initSessionPanel();
+
+	}
+
+	private void initSessionPanel() {
+		SessionView sessionView = new SessionView();
+		add(sessionView);
+		SessionModel sessionModel = new SessionModel(sessionView);
+		this.sessionController = new SessionController(sessionModel, scoringController, trackingController);
+		sessionView.addRefreshButtonListener(e -> this.sessionController.onRefresh());
 	}
 
 	private void initScoringPanel() {
@@ -131,10 +145,8 @@ public class Prototype extends JFrame {
 					try {
 						setNewMixer((Mixer) event.getNewValue());
 					} catch (LineUnavailableException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (UnsupportedAudioFileException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				});
