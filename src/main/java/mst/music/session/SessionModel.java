@@ -1,9 +1,15 @@
 package mst.music.session;
 
-public class SessionModel {
-	private final SessionView sessionView;
+import mst.music.scoring.RunResult;
 
-	public SessionModel(SessionView sessionView) {
-		this.sessionView = sessionView;
+public class SessionModel {
+	private final SessionView view;
+
+	public SessionModel(SessionView view) {
+		this.view = view;
+	}
+
+	public void addRunResults(RunResult runResult) {
+		view.addRunResult(runResult);
 	}
 }

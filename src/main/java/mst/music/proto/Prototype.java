@@ -106,6 +106,7 @@ public class Prototype extends JFrame {
 		SessionModel sessionModel = new SessionModel(sessionView);
 		this.sessionController = new SessionController(sessionModel, scoringController, trackingController);
 		sessionView.addRefreshButtonListener(e -> this.sessionController.onRefresh());
+		sessionView.addSaveButtonListener(e -> this.sessionController.onSave());
 	}
 
 	private void initScoringPanel() {
@@ -122,7 +123,9 @@ public class Prototype extends JFrame {
 		add(trackingPanel);
 		TrackingModel trackingModel = new TrackingModel(trackingPanel);
 		this.trackingController = new TrackingController(trackingModel);
-		this.trackingController.setExcercise(TrackDefinition.HANSL, 120);
+		this.trackingController.setExercise(TrackDefinition.HANSL, 120);
+		trackingPanel.addTrackSelectionListener(e -> this.trackingController.setExercise(
+				TrackDefinition.forTitle(e.getItem().toString())));
 	}
 
 	private void initLoggingPanel() {

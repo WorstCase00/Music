@@ -26,4 +26,8 @@ public class ScoringController implements PitchDetectionHandler {
 	public void refresh() {
 		model.refresh();
 	}
+
+	public RunResult getRunResults() {
+		return model.getCurrentRunResults();
+	}
 }

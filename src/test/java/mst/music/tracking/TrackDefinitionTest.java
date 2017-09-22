@@ -13,10 +13,13 @@ import static org.junit.Assert.assertEquals;
  */
 public class TrackDefinitionTest {
 
+	private static final String TITLE = "some title";
+
+
 	@Test
 	public void testNoteTracking() throws Exception {
 		TrackDefinition subject = new TrackDefinition(
-				Lists.newArrayList(Pitch.C4, Pitch.C4, Pitch.C4, Pitch.C4),
+				TITLE, Lists.newArrayList(Pitch.C4, Pitch.C4, Pitch.C4, Pitch.C4),
 				Lists.newArrayList(0.25F, 0.25F, 0.25F, 0.25F),
 				0.25f
 		);
@@ -31,7 +34,7 @@ public class TrackDefinitionTest {
 	@Test
 	public void testNoteTrackingWithHigherBpm() throws Exception {
 		TrackDefinition subject = new TrackDefinition(
-				Lists.newArrayList(Pitch.C4, Pitch.C4, Pitch.C4, Pitch.C4),
+				TITLE, Lists.newArrayList(Pitch.C4, Pitch.C4, Pitch.C4, Pitch.C4),
 				Lists.newArrayList(0.5F, 0.25F, 0.25F),
 				0.25f
 		);

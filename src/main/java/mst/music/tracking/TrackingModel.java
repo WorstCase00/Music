@@ -33,7 +33,7 @@ public class TrackingModel {
 		this.listeners = Lists.newArrayList();
 	}
 
-	public void setTrackDefinitions(TrackDefinition trackDefinition) {
+	public void setTrackDefinition(TrackDefinition trackDefinition) {
 		this.definition = trackDefinition;
 		this.view.showTrack(trackDefinition);
 	}
@@ -85,5 +85,9 @@ public class TrackingModel {
 	public void refresh() {
 		this.state = TrackingState.State.WAITING;
 		this.view.refresh();
+	}
+
+	public int getBeatsPerMinute() {
+		return beatsPerMinute;
 	}
 }

@@ -1,5 +1,6 @@
 package mst.music.session;
 
+import mst.music.scoring.RunResult;
 import mst.music.scoring.ScoringController;
 import mst.music.tracking.TrackingController;
 import mst.music.tracking.TrackingListener;
@@ -26,6 +27,14 @@ public class SessionController implements TrackingListener {
 	}
 
 	public void onRefresh() {
+		this.scoringController.refresh();
+		this.trackingController.refresh();
+
+	}
+
+	public void onSave() {
+		RunResult runResult = scoringController.getRunResults();
+		sessionModel.addRunResults(runResult);
 		this.scoringController.refresh();
 		this.trackingController.refresh();
 	}

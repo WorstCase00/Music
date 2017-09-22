@@ -110,4 +110,12 @@ public class ScoringModel {
 			LOGGER.debug("end timestamp: {}", endTimestamp);
 		}
 	}
+
+	public RunResult getCurrentRunResults() {
+		return new DefaultRunResult(
+				definition,
+				beatsPerMinute,
+				currentScore
+		);
+	}
 }
