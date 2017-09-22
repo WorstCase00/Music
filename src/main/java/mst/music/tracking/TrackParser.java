@@ -11,7 +11,14 @@ class TrackParser {
 			"G E E2|F D D2|C D E F|G G G2|G E E2|F D D2|C E G G|C4\n";
 
 	private static final String SUM_STRING = "X:0\nT:Sum sum sum\nM:4/4\nK:D\nL:1/4\n" +
-			"G F E2|D E F D|C4|G G G2|G E E2|F D D2|C E G G|C4\n";
+			"G F E2|" +
+			"D E F D|C4|" +
+			"E F G E|" +
+			"D E F D|" +
+			"E F G E|" +
+			"D E F D|" +
+			"G F E2|" +
+			"D E F D|C4\n";
 
 	private static final Map<String, String> TITLE_TO_PARSED =
 			ImmutableMap.of(

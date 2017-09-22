@@ -32,11 +32,11 @@ public class TrackingView  extends JPanel {
 
 		scoreUI =new JScoreComponent();
 		Tune tune = new TuneParser().parse(trackParser.get(TrackDefinition.HANSL));
+		scoreUI.setTune(tune);
 		abc4jNotes = (List<JScoreElement>) tune.getMusic().getFirstVoice().stream()
 				.filter(e -> e instanceof NoteAbstract)
 				.map(e -> scoreUI.getRenditionElementFor((MusicElement) e))
 				.collect(Collectors.toList());
-		scoreUI.setTune(tune);
 		add(scoreUI);
 
 		this.trackBox = new JComboBox<>(new Vector<>(Lists.newArrayList(
@@ -52,11 +52,11 @@ public class TrackingView  extends JPanel {
 
 	public void showTrack(TrackDefinition trackDefinition) {
 		Tune tune = new TuneParser().parse(trackParser.get(trackDefinition));
+		scoreUI.setTune(tune);
 		abc4jNotes = (List<JScoreElement>) tune.getMusic().getFirstVoice().stream()
 				.filter(e -> e instanceof NoteAbstract)
 				.map(e -> scoreUI.getRenditionElementFor((MusicElement) e))
 				.collect(Collectors.toList());
-		scoreUI.setTune(tune);
 		refresh();
 	}
 
