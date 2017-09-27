@@ -94,12 +94,12 @@ public class TrackDefinition {
 
 	public int calculateCurrentNoteIndex(long timeStampInMs, int bpm) {
 		int beatIndex = (int) Math.floor(((double)bpm) * ((double)timeStampInMs) / (double) MILLIS_PER_DAY);
-		LOGGER.debug("beatIndex: {}", beatIndex);
+		LOGGER.trace("beatIndex: {}", beatIndex);
 		return calculateScoreIndexForBeatIndex(beatIndex);
 	}
 
 	private int calculateScoreIndexForBeatIndex(int beatIndex) {
-		LOGGER.debug("beat index: {}", beatIndex);
+		LOGGER.trace("beat index: {}", beatIndex);
 		float length = beat * beatIndex;
 		float cumulatedSum = 0f;
 		for (int i = 0; i < lengths.size(); i++) {

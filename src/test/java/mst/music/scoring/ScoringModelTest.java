@@ -3,6 +3,7 @@ package mst.music.scoring;
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
 import mst.music.analysis.Pitch;
+import mst.music.proto.DefaultScoreCalculation;
 import mst.music.track.TrackDefinition;
 import org.junit.Rule;
 import org.junit.Test;
@@ -66,7 +67,7 @@ public class ScoringModelTest {
 	}
 
 	private ScoringModel createSubject() {
-		ScoringModel subject = new ScoringModel(view);
+		ScoringModel subject = new ScoringModel(view, new DefaultScoreCalculation());
 		subject.setTrackDefinitions(TrackDefinition.HANSL);
 		subject.setBeatsPerMinute(60);
 		return subject;

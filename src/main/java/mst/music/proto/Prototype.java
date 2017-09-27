@@ -112,7 +112,7 @@ public class Prototype extends JFrame {
 	private void initScoringPanel() {
 		ScoringView scoringView = new ScoringView();
 		add(scoringView);
-		ScoringModel scoringModel = new ScoringModel(scoringView);
+		ScoringModel scoringModel = new ScoringModel(scoringView, new DefaultScoreCalculation());
 		this.scoringController = new ScoringController(scoringModel);
 		this.scoringController.setExercise(TrackDefinition.HANSL, 120);
 

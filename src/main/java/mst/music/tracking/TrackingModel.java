@@ -56,28 +56,28 @@ public class TrackingModel {
 	}
 
 	private void handleInTracking(PitchDetectionResult pitchDetectionResult, AudioEvent audioEvent) {
-		LOGGER.debug("ts: {}", audioEvent.getTimeStamp());
+		LOGGER.trace("ts: {}", audioEvent.getTimeStamp());
 		record.add(pitchDetectionResult, audioEvent);
 		if (audioEvent.getEndTimeStamp() > endTimestamp) {
-			LOGGER.debug("set state to done");
+			LOGGER.trace("set state to done");
 			state = TrackingState.State.DONE;
 			view.showTrackingDone();
 			listeners.stream().forEach(listener -> listener.onTrackEnded());
 		} else {
 			int currentIndex = definition.calculateCurrentNoteIndex((long) ((audioEvent.getTimeStamp() - startTimestamp) * 1000), beatsPerMinute);
-			LOGGER.debug("set current note index to: {}", currentIndex);
+			LOGGER.trace("set current note index to: {}", currentIndex);
 			view.showCurrentNode(currentIndex);
 		}
 	}
 
 	private void handleInWaiting(PitchDetectionResult pitchDetectionResult, AudioEvent audioEvent) {
 		if(pitchDetectionResult.getPitch() != -1) {
-			LOGGER.debug("set state to tracking");
+			LOGGER.trace("set state to tracking");
 			state = TrackingState.State.TRACKING;
 			record = new TrackingRecord();
 			startTimestamp = audioEvent.getTimeStamp();
 			endTimestamp = audioEvent.getTimeStamp() + definition.getBeatCount() / beatsPerMinute * 60;
-			LOGGER.debug("end timestamp: {}", endTimestamp);
+			LOGGER.trace("end timestamp: {}", endTimestamp);
 			listeners.stream().forEach(listener -> listener.onTrackStarted());
 		}
 	}
