@@ -28,6 +28,7 @@ import be.tarsos.dsp.AudioDispatcher;
 import be.tarsos.dsp.io.jvm.JVMAudioInputStream;
 import be.tarsos.dsp.pitch.PitchProcessor;
 import be.tarsos.dsp.pitch.PitchProcessor.PitchEstimationAlgorithm;
+import mst.music.scoring.HitNotesScoreCalculation;
 import mst.music.scoring.ScoringController;
 import mst.music.scoring.ScoringModel;
 import mst.music.scoring.ScoringView;
@@ -112,7 +113,8 @@ public class Prototype extends JFrame {
 	private void initScoringPanel() {
 		ScoringView scoringView = new ScoringView();
 		add(scoringView);
-		ScoringModel scoringModel = new ScoringModel(scoringView, new DefaultScoreCalculation());
+//		ScoringModel scoringModel = new ScoringModel(scoringView, new DefaultScoreCalculation());
+		ScoringModel scoringModel = new ScoringModel(scoringView, new HitNotesScoreCalculation(TrackDefinition.HANSL, 120));
 		this.scoringController = new ScoringController(scoringModel);
 		this.scoringController.setExercise(TrackDefinition.HANSL, 120);
 

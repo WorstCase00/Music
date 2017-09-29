@@ -1,4 +1,10 @@
 package mst.music.analysis;
+
+import com.google.common.collect.Lists;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum Pitch {
 	
 	C0(16.35f),
@@ -102,6 +108,111 @@ public enum Pitch {
 	D8(4698.64f),
 	D8Eb8(4978.03f);
 
+	public static final List<Pitch> LADDER = Lists.newArrayList(
+			C0,
+			C0Db0,
+			D0,
+			D0Eb0,
+			E0,
+			F0,
+			F0Gb0,
+			G0,
+			G0Ab0,
+			A0,
+			A0Bb0,
+			B0,
+			C1,
+			C1Db1,
+			D1,
+			D1Eb1,
+			E1,
+			F1,
+			F1Gb1,
+			G1,
+			G1Ab1,
+			A1,
+			A1Bb1,
+			B1,
+			C2,
+			C2Db2,
+			D2,
+			D2Eb2,
+			E2,
+			F2,
+			F2Gb2,
+			G2,
+			G2Ab2,
+			A2,
+			A2Bb2,
+			B2,
+			C3,
+			C3Db3,
+			D3,
+			D3Eb3,
+			E3,
+			F3,
+			F3Gb3,
+			G3,
+			G3Ab3,
+			A3,
+			A3Bb3,
+			B3,
+			C4,
+			C4Db4,
+			D4,
+			D4Eb4,
+			E4,
+			F4,
+			F4Gb4,
+			G4,
+			G4Ab4,
+			A4,
+			A4Bb4,
+			B4,
+			C5,
+			C5Db5,
+			D5,
+			D5Eb5,
+			E5,
+			F5,
+			F5Gb5,
+			G5,
+			G5Ab5,
+			A5,
+			A5Bb5,
+			B5,
+			C6,
+			C6Db6,
+			D6,
+			D6Eb6,
+			E6,
+			F6,
+			F6Gb6,
+			G6,
+			G6Ab6,
+			A6,
+			A6Bb6,
+			B6,
+			C7,
+			C7Db7,
+			D7,
+			D7Eb7,
+			E7,
+			F7,
+			F7Gb7,
+			G7,
+			G7Ab7,
+			A7,
+			A7Bb7,
+			B7,
+			C8,
+			C8Db8,
+			D8,
+			D8Eb8
+	);
+
+	public static final List<Float> PITCH_FREQUENCIES =
+			LADDER.stream().map(pitch -> pitch.getFrequency()).collect(Collectors.toList());
 
 	private final float frequency;
 
@@ -112,5 +223,11 @@ public enum Pitch {
 	public float getFrequency() {
 		return frequency;
 	}
-	
+
+
+	@Override
+	public String toString() {
+		return this.name();
+	}
+
 }

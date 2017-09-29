@@ -1,20 +1,28 @@
-package mst.music.proto;
+package mst.music.scoring;
 
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
 import mst.music.analysis.Pitch;
-import mst.music.scoring.Score;
-import mst.music.scoring.ScoreCalculation;
-import mst.music.track.PitchDetectionEvent;
 import mst.music.track.TrackDefinition;
 import mst.music.tracking.TrackingRecord;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
 
-public class DefaultScoreCalculation implements ScoreCalculation {
+public class HitNotesScoreCalculation implements ScoreCalculation {
 
-	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(DefaultScoreCalculation.class);
+	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(HitNotesScoreCalculation.class);
+
+	private TrackingRecord trackingRecord;
+	private TrackDefinition definition;
+	private int beatsPerMinute;
+
+	public HitNotesScoreCalculation(TrackDefinition trackDefinition, int bpm) {
+		this.definition = trackDefinition;
+		this.beatsPerMinute = bpm;
+		this.trackingRecord = new TrackingRecord();
+	}
 
 	@Override
 	public Score add(PitchDetectionResult pitchDetectionResult, AudioEvent audioEvent) {
@@ -42,34 +50,21 @@ public class DefaultScoreCalculation implements ScoreCalculation {
 		this.beatsPerMinute = beatsPerMinute;
 	}
 
-	private TrackingRecord trackingRecord;
-	private TrackDefinition definition;
-	private int beatsPerMinute;
-
 	private float calculateCurrentScore() {
 		List<Long> timestamps = trackingRecord.getTimestamps();
 		float sum = 0;
 		LOGGER.debug("timestamp count: {}", timestamps.size());
 		for (int i = 0; i < timestamps.size(); i++) {
-			Pitch expectedPitch = definition.calculateNote(timestamps.get(i), beatsPerMinute);
-			PitchDetectionEvent result = trackingRecord.getResult(i);
+			Pitch expectedPitch = definition.calculatePitch(timestamps.get(i), beatsPerMinute);
+			Optional<Pitch> actualPitch = trackingRecord.getResult(i).getNearestPitch();
 
-			float expectedFrequency = expectedPitch.getFrequency();
-			float actualFrequency = result.getFrequency();
-
-			float delta = calculateDelta(expectedFrequency, actualFrequency);
-			LOGGER.debug("delta for frequency tuple ({}, {}): {}", new Object[] {expectedFrequency, actualFrequency, delta});
-			sum += delta;
+			LOGGER.debug("got pitch for expected {}: {}", expectedPitch, actualPitch);
+			if (expectedPitch.equals(actualPitch.orElse(null))) {
+				sum += 1;
+			}
 		}
 		LOGGER.debug("current score: {}", sum);
 		return sum;
-	}
-
-	private static float calculateDelta(float expectedFrequency, float actualFrequency) {
-		if (actualFrequency < 0) {
-			return 0;
-		}
-		return 1 - (Math.abs(expectedFrequency - actualFrequency)) / (expectedFrequency + actualFrequency);
 	}
 
 }
