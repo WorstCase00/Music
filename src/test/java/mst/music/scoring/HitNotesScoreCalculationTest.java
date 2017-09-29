@@ -29,7 +29,7 @@ public class HitNotesScoreCalculationTest {
 	@Test
 	public void testPerfectPitchHit() throws Exception {
 		when(audioEvent.getTimeStamp()).thenReturn(0d);
-		when(track.calculatePitch(0l, BPM)).thenReturn(Pitch.A4);
+		when(track.calculatePitch(0L, BPM)).thenReturn(Pitch.A4);
 		when(pitchDetectionResult.getPitch()).thenReturn(Pitch.A4.getFrequency());
 
 		HitNotesScoreCalculation subject = createSubject();
@@ -42,7 +42,7 @@ public class HitNotesScoreCalculationTest {
 	@Test
 	public void testMaximumFrequencyHit() throws Exception {
 		when(audioEvent.getTimeStamp()).thenReturn(0d);
-		when(track.calculatePitch(0l, BPM)).thenReturn(Pitch.A4);
+		when(track.calculatePitch(0L, BPM)).thenReturn(Pitch.A4);
 		when(pitchDetectionResult.getPitch()).thenReturn(Float.MAX_VALUE);
 
 		HitNotesScoreCalculation subject = createSubject();
@@ -55,7 +55,7 @@ public class HitNotesScoreCalculationTest {
 	@Test
 	public void testMinimumFrequency() throws Exception {
 		when(audioEvent.getTimeStamp()).thenReturn(0d);
-		when(track.calculatePitch(0l, BPM)).thenReturn(Pitch.A4);
+		when(track.calculatePitch(0L, BPM)).thenReturn(Pitch.A4);
 		when(pitchDetectionResult.getPitch()).thenReturn(0f);
 
 		HitNotesScoreCalculation subject = createSubject();
@@ -68,7 +68,7 @@ public class HitNotesScoreCalculationTest {
 	@Test
 	public void testNoPitch() throws Exception {
 		when(audioEvent.getTimeStamp()).thenReturn(0d);
-		when(track.calculatePitch(0l, BPM)).thenReturn(Pitch.A4);
+		when(track.calculatePitch(0L, BPM)).thenReturn(Pitch.A4);
 		when(pitchDetectionResult.getPitch()).thenReturn(-1f);
 
 		HitNotesScoreCalculation subject = createSubject();
@@ -79,12 +79,10 @@ public class HitNotesScoreCalculationTest {
 	}
 
 	private HitNotesScoreCalculation createSubject() {
-		HitNotesScoreCalculation hitNotesScoreCalculation = new HitNotesScoreCalculation(
+		return new HitNotesScoreCalculation(
 				track,
 				BPM
 		);
-
-		return hitNotesScoreCalculation;
 	}
 
 }
