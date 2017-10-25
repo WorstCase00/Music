@@ -48,10 +48,10 @@ public class PitchDetectionEvent {
 			return Pitch.LADDER.get(insertionPoint - 1);
 		}
 
-		if (Math.abs(frequency - Pitch.LADDER.get(insertionPoint).getFrequency()) <=
-				Math.abs(frequency - Pitch.LADDER.get(insertionPoint + 1).getFrequency())) {
-			return Pitch.LADDER.get(insertionPoint);
+		if (Math.abs(frequency - Pitch.LADDER.get(insertionPoint-1).getFrequency()) <=
+				Math.abs(frequency - Pitch.LADDER.get(insertionPoint).getFrequency())) {
+			return Pitch.LADDER.get(insertionPoint-1);
 		}
-		return Pitch.LADDER.get(insertionPoint + 1);
+		return Pitch.LADDER.get(insertionPoint);
 	}
 }

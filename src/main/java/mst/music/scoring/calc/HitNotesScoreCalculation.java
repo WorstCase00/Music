@@ -1,27 +1,21 @@
-package mst.music.scoring;
+package mst.music.scoring.calc;
 
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
 import mst.music.analysis.Pitch;
+import mst.music.scoring.Score;
 import mst.music.track.TrackDefinition;
-import mst.music.tracking.TrackingRecord;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
 
-public class HitNotesScoreCalculation implements ScoreCalculation {
+public class HitNotesScoreCalculation extends BaseScoreCalculation {
 
 	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(HitNotesScoreCalculation.class);
 
-	private TrackingRecord trackingRecord;
-	private TrackDefinition definition;
-	private int beatsPerMinute;
-
 	public HitNotesScoreCalculation(TrackDefinition trackDefinition, int bpm) {
-		this.definition = trackDefinition;
-		this.beatsPerMinute = bpm;
-		this.trackingRecord = new TrackingRecord();
+		super(trackDefinition, bpm);
 	}
 
 	@Override
@@ -33,21 +27,6 @@ public class HitNotesScoreCalculation implements ScoreCalculation {
 		return new Score(
 				scoreValue,
 				percentage);
-	}
-
-	@Override
-	public void reset() {
-		trackingRecord = new TrackingRecord();
-	}
-
-	@Override
-	public void setDefinition(TrackDefinition definition) {
-		this.definition = definition;
-	}
-
-	@Override
-	public void setBeatsPerMinute(int beatsPerMinute) {
-		this.beatsPerMinute = beatsPerMinute;
 	}
 
 	private float calculateCurrentScore() {

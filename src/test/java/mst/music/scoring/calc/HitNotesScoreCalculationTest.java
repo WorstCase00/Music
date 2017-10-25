@@ -1,8 +1,9 @@
-package mst.music.scoring;
+package mst.music.scoring.calc;
 
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
 import mst.music.analysis.Pitch;
+import mst.music.scoring.Score;
 import mst.music.track.TrackDefinition;
 import org.junit.Rule;
 import org.junit.Test;

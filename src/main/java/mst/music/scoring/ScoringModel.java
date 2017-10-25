@@ -2,6 +2,7 @@ package mst.music.scoring;
 
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
+import mst.music.scoring.calc.ScoreCalculation;
 import mst.music.track.TrackDefinition;
 import mst.music.track.TrackingState;
 import org.slf4j.LoggerFactory;
