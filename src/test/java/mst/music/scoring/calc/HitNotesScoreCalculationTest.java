@@ -2,6 +2,7 @@ package mst.music.scoring.calc;
 
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
+import mst.music.TestConstant;
 import mst.music.analysis.Pitch;
 import mst.music.scoring.Score;
 import mst.music.track.TrackDefinition;
@@ -37,7 +38,7 @@ public class HitNotesScoreCalculationTest {
 
 		Score result = subject.add(pitchDetectionResult, audioEvent);
 
-		assertEquals(1f, result.getValue(), 0.001);
+		assertEquals(1f, result.getValue(), TestConstant.DELTA);
 	}
 
 	@Test
@@ -50,7 +51,7 @@ public class HitNotesScoreCalculationTest {
 
 		Score result = subject.add(pitchDetectionResult, audioEvent);
 
-		assertEquals(0f, result.getValue(), 0.001);
+		assertEquals(0f, result.getValue(), TestConstant.DELTA);
 	}
 
 	@Test
@@ -63,7 +64,7 @@ public class HitNotesScoreCalculationTest {
 
 		Score result = subject.add(pitchDetectionResult, audioEvent);
 
-		assertEquals(0f, result.getValue(), 0.001);
+		assertEquals(0f, result.getValue(), TestConstant.DELTA);
 	}
 
 	@Test
@@ -76,7 +77,7 @@ public class HitNotesScoreCalculationTest {
 
 		Score result = subject.add(pitchDetectionResult, audioEvent);
 
-		assertEquals(0f, result.getValue(), 0.001);
+		assertEquals(0f, result.getValue(), TestConstant.DELTA);
 	}
 
 	private HitNotesScoreCalculation createSubject() {

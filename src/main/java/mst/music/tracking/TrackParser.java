@@ -7,7 +7,7 @@ import java.util.Map;
 
 class TrackParser {
 
-	private static final String HANSL_STRING = "X:0\nT:A simple scale exercise\nM:4/4\nK:D\nL:1/4\n" +
+	private static final String HANSL_STRING = "X:0\nT:Hansl small\nM:4/4\nL:1/4\n" +
 			"G E E2|F D D2|C D E F|G G G2|G E E2|F D D2|C E G G|C4\n";
 
 	private static final String SUM_STRING = "X:0\nT:Sum sum sum\nM:4/4\nK:D\nL:1/4\n" +

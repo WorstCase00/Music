@@ -6,7 +6,6 @@ import mst.music.analysis.Pitch;
 import mst.music.scoring.Score;
 import mst.music.track.PitchDetectionEvent;
 import mst.music.track.TrackDefinition;
-import mst.music.tracking.TrackingRecord;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
@@ -14,10 +13,6 @@ import java.util.List;
 public class DefaultScoreCalculation extends BaseScoreCalculation {
 
 	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(DefaultScoreCalculation.class);
-
-	private TrackingRecord trackingRecord;
-	private TrackDefinition definition;
-	private int beatsPerMinute;
 
 	public DefaultScoreCalculation(TrackDefinition trackDefinition, int bpm) {
 		super(trackDefinition, bpm);
