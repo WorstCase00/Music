@@ -33,25 +33,8 @@ public class PitchDetectionEvent {
 		if (frequency == -1) {
 			return Optional.empty();
 		}
-		return Optional.of(getRealPitch());
+		return Optional.of(Pitch.getNearestPitch(frequency));
 	}
 
-	private Pitch getRealPitch() {
-		int index = Collections.binarySearch(Pitch.PITCH_FREQUENCIES, frequency);
-		if (index >= 0) {
-			return Pitch.LADDER.get(index);
-		}
-		int insertionPoint = (-index) - 1;
-		if (insertionPoint == 0) {
-			return Pitch.LADDER.get(0);
-		} else if (insertionPoint == Pitch.LADDER.size()) {
-			return Pitch.LADDER.get(insertionPoint - 1);
-		}
 
-		if (Math.abs(frequency - Pitch.LADDER.get(insertionPoint-1).getFrequency()) <=
-				Math.abs(frequency - Pitch.LADDER.get(insertionPoint).getFrequency())) {
-			return Pitch.LADDER.get(insertionPoint-1);
-		}
-		return Pitch.LADDER.get(insertionPoint);
-	}
 }

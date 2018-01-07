@@ -31,7 +31,7 @@ import be.tarsos.dsp.pitch.PitchProcessor.PitchEstimationAlgorithm;
 import mst.music.scoring.ScoringController;
 import mst.music.scoring.ScoringModel;
 import mst.music.scoring.ScoringView;
-import mst.music.scoring.calc.HitNotesScoreCalculation;
+import mst.music.scoring.calc.DefaultScoreCalculation;
 import mst.music.session.SessionController;
 import mst.music.session.SessionModel;
 import mst.music.session.SessionView;
@@ -40,13 +40,7 @@ import mst.music.tracking.TrackingController;
 import mst.music.tracking.TrackingModel;
 import mst.music.tracking.TrackingView;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.Mixer;
-import javax.sound.sampled.TargetDataLine;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -113,8 +107,8 @@ public class Prototype extends JFrame {
 	private void initScoringPanel() {
 		ScoringView scoringView = new ScoringView();
 		add(scoringView);
-//		ScoringModel scoringModel = new ScoringModel(scoringView, new DefaultScoreCalculation(TrackDefinition.HANSL, 120));
-		ScoringModel scoringModel = new ScoringModel(scoringView, new HitNotesScoreCalculation(TrackDefinition.HANSL, 120));
+		ScoringModel scoringModel = new ScoringModel(scoringView, new DefaultScoreCalculation(TrackDefinition.HANSL, 120));
+//		ScoringModel scoringModel = new ScoringModel(scoringView, new HitNotesScoreCalculation(TrackDefinition.HANSL, 120));
 		this.scoringController = new ScoringController(scoringModel);
 		this.scoringController.setExercise(TrackDefinition.HANSL, 120);
 

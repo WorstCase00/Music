@@ -2,10 +2,13 @@ package mst.music.analysis;
 
 import com.google.common.collect.Lists;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public enum Pitch {
+
+
 	
 	C0(16.35f),
 	C0Db0(17.32f),
@@ -210,6 +213,25 @@ public enum Pitch {
 			D8,
 			D8Eb8
 	);
+
+	public static Pitch getNearestPitch(float frequency) {
+		int index = Collections.binarySearch(Pitch.PITCH_FREQUENCIES, frequency);
+		if (index >= 0) {
+			return Pitch.LADDER.get(index);
+		}
+		int insertionPoint = (-index) - 1;
+		if (insertionPoint == 0) {
+			return Pitch.LADDER.get(0);
+		} else if (insertionPoint == Pitch.LADDER.size()) {
+			return Pitch.LADDER.get(insertionPoint - 1);
+		}
+
+		if (Math.abs(frequency - Pitch.LADDER.get(insertionPoint-1).getFrequency()) <=
+				Math.abs(frequency - Pitch.LADDER.get(insertionPoint).getFrequency())) {
+			return Pitch.LADDER.get(insertionPoint-1);
+		}
+		return Pitch.LADDER.get(insertionPoint);
+	}
 
 	public static final List<Float> PITCH_FREQUENCIES =
 			LADDER.stream().map(pitch -> pitch.getFrequency()).collect(Collectors.toList());
